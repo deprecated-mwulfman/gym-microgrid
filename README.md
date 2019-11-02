@@ -1,1 +1,1 @@
-# gym-Microgrid
+# gym-microgrid
