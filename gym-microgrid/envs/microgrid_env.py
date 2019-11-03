@@ -68,7 +68,7 @@ class MicrogridEnv(gym.Env):
     return self._get_obs(), -costs, False, {}
 
   def reset(self):
-    high = np.array([np.pi, 1])
+    high = np.array([np.pi,np.pi,np.pi,np.pi,np.pi,np.pi, 100,100,100,100,100,100])
     self.state = self.np_random.uniform(low=-high, high=high)
     self.last_u = None
     return self._get_obs()
