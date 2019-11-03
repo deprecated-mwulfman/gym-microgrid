@@ -45,7 +45,7 @@ class MicrogridEnv(gym.Env):
     newx_1 = f_1 
     newx_2 = f_2 + g_2@u
 
-    self.state = np.array([newx_1, newtx_2])
+    self.state = np.concatenate((x_1,x_2),axis=0)
     return self._get_obs(), -costs, False, {}
 
   def reset(self):
