@@ -52,8 +52,8 @@ class MicrogridEnv(gym.Env):
     return [seed]
   def step(self,u):
     x = self.state # th := theta
-    x_1=x[:self.n+1]
-    x_2=x[self.n+1:]
+    x_1=x[:self.n]
+    x_2=x[self.n:]
     
     f_1 = x_1 + self.T_1 @ x_2
     P = np.zeros((6,1))
