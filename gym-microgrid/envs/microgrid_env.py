@@ -36,7 +36,7 @@ class MicrogridEnv(gym.Env):
     
     self.k_P = np.array([[0.396, 7.143, 0.766, 1.117, 1.191, 16.667]])
     self.K_P = np.diag(self.k_P)
-    self.T_1 = self.dt=.05*np.eye(n)
+    self.T_1 = self.dt=.05*np.eye(self.n)
     self.T_2 = np.diag((self.dt/self.dt_2)*np.ones((n,1)))
     
     self.viewer = None
