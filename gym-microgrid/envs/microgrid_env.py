@@ -51,7 +51,9 @@ class MicrogridEnv(gym.Env):
     self.np_random, seed = seeding.np_random(seed)
     return [seed]
   def step(self,u):
-    x_1, x_2 = self.state # th := theta
+    x = self.state # th := theta
+    x_1=x[:4]
+    x_2=x[4:]
     
     f_1 = x_1 + self.T_1 @ x_2
     P = np.zeros((6,1))
