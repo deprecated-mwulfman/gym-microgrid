@@ -6,6 +6,7 @@ class MicrogridEnv(gym.Env):
   metadata = {'render.modes': ['human']}
 
   def __init__(self):
+    
     self.max_u=100
     
     self.n = 6
@@ -21,8 +22,8 @@ class MicrogridEnv(gym.Env):
     self.T_2 = np.diag(self.dt/self.dt_*np.ones((n,1)))
     self.viewer = None
 
-    high = np.array([1., 1., self.max_speed])
-    self.action_space = spaces.Box(low=-self.max_torque, high=self.max_torque, shape=(1,), dtype=np.float32)
+    high = 100*np.array([1., 1., 1.,1., 1., 1.,1., 1., 1.,1., 1., 1.])
+    self.action_space = spaces.Box(low=-self.max_u, high=self.max_u, shape=(6,), dtype=np.float32)
     self.observation_space = spaces.Box(low=-high, high=high, dtype=np.float32)
 
     self.seed()
@@ -55,8 +56,8 @@ class MicrogridEnv(gym.Env):
     return self._get_obs()
 
   def _get_obs(self):
-    theta, thetadot = self.state
-    return np.array([np.cos(theta), np.sin(theta), thetadot])
+    
+    return self.state
 
   def render(self, mode='human'):
     pass
