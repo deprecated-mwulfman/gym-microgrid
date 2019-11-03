@@ -56,8 +56,8 @@ class MicrogridEnv(gym.Env):
     x_2=x[self.n:]
     
     f_1 = x_1 + self.T_1 @ x_2
-    P = np.zeros((6,1))
-    f_2 = x_2 - self.T_2 @(x_2+self.K_P @ ( P-self.P_star)-u)
+    P = self.P_star ## TO DO
+    f_2 = x_2 - self.T_2 @(x_2+self.K_P @ ( P-self.P_star))
     g_2 = self.T_2
     
     u = np.clip(u, -self.max_u, self.max_u)[0]
@@ -65,7 +65,7 @@ class MicrogridEnv(gym.Env):
     costs = np.sum(x_1**2) + .1*np.sum(x_2**2) + .001*np.sum((u**2))
 
     newx_1 = f_1 
-    newx_2 = f_2 + g_2@u
+    newx_2 = f_2 + np.dot(g_2,u)
 
     self.state = np.concatenate((x_1,x_2),axis=0)
     return self._get_obs(), -costs, False, {}
