@@ -35,7 +35,7 @@ class MicrogridEnv(gym.Env):
     x_1, x_2 = self.state # th := theta
     
     f_1 = x_1 + self.T_1 @ x_2
-    P = 0
+    P = np.zeros((6,1))
     f_2 = x_2 - self.T_2 @(x_2+self.K_P @ ( P-self.P_star)-u)
     g_2 = self.T_2
     
