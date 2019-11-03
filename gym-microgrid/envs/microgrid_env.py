@@ -86,5 +86,3 @@ class MicrogridEnv(gym.Env):
       self.viewer.close()
       self.viewer = None
 
-  def angle_normalize(x):
-    return (((x+np.pi) % (2*np.pi)) - np.pi)
