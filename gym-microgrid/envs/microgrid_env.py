@@ -59,7 +59,7 @@ class MicrogridEnv(gym.Env):
     
     u = np.clip(u, -self.max_torque, self.max_torque)[0]
     self.last_u = u # for rendering
-    costs = angle_normalize(np.sum(x_1))**2 + .1*x_2**2 + .001*(u**2)
+    costs = np.sum(x_1**2) + .1*np.sum(x_2**2) + .001*np.sum((u**2))
 
     newx_1 = f_1 
     newx_2 = f_2 + g_2@u
