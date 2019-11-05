@@ -96,16 +96,16 @@ class MicrogridEnv(gym.Env):
       self.viewer.close()
       self.viewer = None
       
- def power_flow(self, gb_dict,delta):
-  p1 = self.load['5H']+self.load['5I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[0]-delta[2])-gb_dict['5 9'][1]*np.sin(delta[0]-delta[2])+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[0]-delta[2])-gb_dict['10 5'][1]*np.sin(delta[0]-delta[2])
-  p2 = self.load['5H']+self.load['5I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[1]-delta[3])-gb_dict['5 9'][1]*np.sin(delta[1]-delta[3])+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[1]-delta[3])-gb_dict['10 5'][1]*np.sin(delta[1]-delta[3])
-  p3 = self.load['9H']+self.load['9I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[2]-delta[0])-gb_dict['5 9'][1]*np.sin(delta[2]-delta[0])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[2]-delta[4])-gb_dict['9 10'][1]*np.sin(delta[2]-delta[4])
-  p4 = self.load['9H']+self.load['9I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[3]-delta[1])-gb_dict['5 9'][1]*np.sin(delta[3]-delta[1])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[3]-delta[5])-gb_dict['9 10'][1]*np.sin(delta[3]-delta[5])
-  p5 = self.load['10H']+self.load['10I']+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[4]-delta[0])-gb_dict['10 5'][1]*np.sin(delta[4]-delta[0])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[4]-delta[2])-gb_dict['9 10'][1]*np.sin(delta[4]-delta[2])
-  p6 = self.load['10H']+self.load['10I']+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[5]-delta[1])-gb_dict['10 5'][1]*np.sin(delta[5]-delta[1])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[5]-delta[3])-gb_dict['9 10'][1]*np.sin(delta[5]-delta[3])
-  return np.array([p1,p2,p3,p4,p5,p6])
+  def power_flow(self, gb_dict,delta):
+    p1 = self.load['5H']+self.load['5I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[0]-delta[2])-gb_dict['5 9'][1]*np.sin(delta[0]-delta[2])+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[0]-delta[2])-gb_dict['10 5'][1]*np.sin(delta[0]-delta[2])
+    p2 = self.load['5H']+self.load['5I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[1]-delta[3])-gb_dict['5 9'][1]*np.sin(delta[1]-delta[3])+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[1]-delta[3])-gb_dict['10 5'][1]*np.sin(delta[1]-delta[3])
+    p3 = self.load['9H']+self.load['9I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[2]-delta[0])-gb_dict['5 9'][1]*np.sin(delta[2]-delta[0])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[2]-delta[4])-gb_dict['9 10'][1]*np.sin(delta[2]-delta[4])
+    p4 = self.load['9H']+self.load['9I']+gb_dict['5 9'][0]-gb_dict['5 9'][0]*np.cos(delta[3]-delta[1])-gb_dict['5 9'][1]*np.sin(delta[3]-delta[1])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[3]-delta[5])-gb_dict['9 10'][1]*np.sin(delta[3]-delta[5])
+    p5 = self.load['10H']+self.load['10I']+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[4]-delta[0])-gb_dict['10 5'][1]*np.sin(delta[4]-delta[0])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[4]-delta[2])-gb_dict['9 10'][1]*np.sin(delta[4]-delta[2])
+    p6 = self.load['10H']+self.load['10I']+gb_dict['10 5'][0]-gb_dict['10 5'][0]*np.cos(delta[5]-delta[1])-gb_dict['10 5'][1]*np.sin(delta[5]-delta[1])+gb_dict['9 10'][0]-gb_dict['9 10'][0]*np.cos(delta[5]-delta[3])-gb_dict['9 10'][1]*np.sin(delta[5]-delta[3])
+    return np.array([p1,p2,p3,p4,p5,p6])
       
-def rx_to_gb(self, y_dict):
+  def rx_to_gb(self, y_dict):
     gb_dict = {}
     for key in y_dict:
       r = y_dict[key][0]*y_dict[key][3]
