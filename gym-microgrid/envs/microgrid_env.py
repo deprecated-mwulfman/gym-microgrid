@@ -13,7 +13,7 @@ class MicrogridEnv(gym.Env):
     self.n = 6
     self.dt = .05
     self.dt_2 = 0.5
-    
+    self.f_star = 50
     self.P_N = np.array([[0.505, 0.028, 0.261, 0.179, 0.168, 0.012]])
     self.P_star = np.array([[0.202, 0.008, 0.078, 0.054, 0.067, 0.004]])
     
@@ -41,8 +41,8 @@ class MicrogridEnv(gym.Env):
     
     self.k_P = np.array([[0.396, 7.143, 0.766, 1.117, 1.191, 16.667]])
     self.K_P = np.diag(self.k_P)
-    self.T_1 = self.dt=.05*np.eye(self.n)
-    self.T_2 = np.diag((self.dt/self.dt_2)*np.ones((self.n,1)))
+    self.T_1 = self.dt*np.eye(self.n)
+    self.T_2 = (self.dt/self.dt_2)*np.eye(self.n)
     
     self.viewer = None
 
@@ -61,10 +61,11 @@ class MicrogridEnv(gym.Env):
     x = self.state # th := theta
     x_1=x[:self.n]
     x_2=x[self.n:]
-    
+
     f_1 = x_1 + self.T_1 @ x_2
-    P = power_flow(self, rx_to_gb(self.y_dict),x_1) ## TO DO
+    P = self.power_flow( self.rx_to_gb(self.y_dict),x_1) ## TO DO
     f_2 = x_2 - self.T_2 @(x_2+self.K_P @ ( P-self.P_star))
+
     g_2 = self.T_2
     
   
@@ -78,8 +79,9 @@ class MicrogridEnv(gym.Env):
     return self._get_obs(), -costs, False, {}
 
   def reset(self):
-    high = np.array([np.pi,np.pi,np.pi,np.pi,np.pi,np.pi, 100,100,100,100,100,100])
-    self.state = self.np_random.uniform(low=-high, high=high)
+    high = np.array([np.pi,np.pi,np.pi,np.pi,np.pi,np.pi, 55/(2*np.pi),55/(2*np.pi),55/(2*np.pi),55/(2*np.pi),55/(2*np.pi),55/(2*np.pi)])
+    low = np.array([-np.pi,-np.pi,-np.pi,-np.pi,-np.pi,-np.pi, 45/(2*np.pi),45/(2*np.pi),45/(2*np.pi),45/(2*np.pi),45/(2*np.pi),45/(2*np.pi)])
+    self.state = self.np_random.uniform(low=low, high=high)
     self.last_u = None
     return self._get_obs()
 
