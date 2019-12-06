@@ -1,2 +1,1 @@
 from gym_microgrid.envs.microgrid_env import MicrogridEnv
-from gym_microgrid.envs.microgrid_extrahard_env import MicrogridExtraHardEnv
